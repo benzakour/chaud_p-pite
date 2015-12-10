@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package plugin;
+package plugins;
 
 /**
  *
  * @author Quietlyben
  */
 public interface Plugin {
-    
+
+    public String transform(String s);
+
+    public String getLabel();
 }

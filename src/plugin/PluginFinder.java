@@ -1,53 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package plugin;
 
-import timer.MyTimer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Observable;
 
-/**
- *
- * @author Quietlyben
- */
-public class PluginFinder implements ActionListener {
-    
-    protected PluginFilter pf;
-    protected final File DIR;
-    protected MyTimer timer;
-    protected ArrayList<File> files;
+import javax.swing.JMenu;
+import javax.swing.JTextArea;
 
-    public PluginFinder(File dir) {
-        this.pf = new PluginFilter();
-        this.DIR = dir;
-        this.timer = new MyTimer(this);
+public class PluginFinder extends Observable implements ActionListener {
+
+    PluginFilter pf = new PluginFilter();
+    File dPath;
+    ArrayList<Class<?>> plugins = new ArrayList<Class<?>>();
+
+    public PluginFinder(File f, JMenu jMenu, JTextArea jta) {
+        this.dPath = f;
     }
-    
-    public void start(){
-        
+
+    File[] listPluginFile() {
+        return dPath.listFiles(pf);
     }
-    
-    public List getFiles(){
-        File[] filesInDirectory = this.DIR.listFiles(this.pf);
-        if(filesInDirectory == null || filesInDirectory.length == 0){
-            return new ArrayList();
-        } else {
-            List list = new ArrayList();
-            for(File file : filesInDirectory){
-                list.add(file);
+
+    public void actionPerformed(ActionEvent e) {
+        File[] liste = listPluginFile();
+        for (int i = 0; i < liste.length; i++) {
+            File current = liste[i];// recup le fichier courant
+            String pName = current.getName().substring(0, current.getName().length() - 6); //retire l'extension.class
+            try {
+                Class<?> cl = Class.forName("plugins." + pName); //cree la class associ� au nom
+                if (!existPlugin(cl)) {//test si le plugin n'existe aps deja
+                    plugins.add(cl);
+                    notifyObservers(cl);// on previent la barre de menu qu'il y a un nouveau plugin
+                    //createMenuItem(cl);
+                }
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
             }
-            return list;
         }
     }
 
+    private boolean existPlugin(Class<?> cl) {
+        return plugins.contains(cl);
+    }
+
     @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }    
+    public void notifyObservers(Object o) {
+        setChanged();
+        super.notifyObservers(o);
+    }
+
 }
