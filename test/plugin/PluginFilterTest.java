@@ -1,4 +1,4 @@
-package pluginTest;
+package plugin;
 
 import static org.junit.Assert.*;
 

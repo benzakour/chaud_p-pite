@@ -26,7 +26,7 @@ public class ToLowerCase implements Plugin {
 
     /**
      * get the label of the plugin
-     * @return the plugin name
+     * @return the plugin name "To Lower Case"
      */
     @Override
     public String getLabel() {

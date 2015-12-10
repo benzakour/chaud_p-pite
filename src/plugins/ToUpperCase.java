@@ -22,7 +22,7 @@ public class ToUpperCase implements Plugin {
 
     /**
      * get the label of the plugin
-     * @return the plugin name
+     * @return the plugin name "To Upper Case"
      */
     @Override
     public String getLabel() {

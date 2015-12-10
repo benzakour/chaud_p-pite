@@ -1,32 +1,54 @@
+/**
+ * Happy : happy plugin transform the curent string with the happy encrytpion
+ */
 package plugins;
 
 public class Happy implements Plugin{
 
+	/**
+	 * this method transform the current string with the happy encryption
+	 * replace the vowels with happy smile
+	 * @param curentString : the curent string to transform
+	 * @return the string transforming
+	 */
 	@Override
 	public String transform(String curentString) {
 		String happyString = "";
 		for(int i=0; i<curentString.length(); i++){
 			char letter = Character.toLowerCase(curentString.charAt(i));
-			if(letter == 'a')
+			switch(letter){
+			case 'a':
 				happyString += " :) ";
-			if(letter == 'e')
+				break;
+			case 'e':
 				happyString += " <3 ";
-			if(letter == 'i')
+				break;
+			case 'i':
 				happyString += " ;) ";
-			if(letter == 'o')
+				break;
+			case 'o':
 				happyString += " :D ";
-			if(letter == 'u')
+				break;
+			case 'u':
 				happyString += " 8-) ";
-			if(letter == 'y')
+				break;
+			case 'y':
 				happyString += " ;) ";
-			happyString += curentString.charAt(i);
+				break;
+				default:
+					happyString += curentString.charAt(i);
+			}
 		}
 		return happyString;
 	}
 
+	/**
+     * get the label of the plugin
+     * @return the plugin name "Happy string"
+     */
 	@Override
 	public String getLabel() {
-		return "happy string";
+		return "Happy string";
 	}
 
 }

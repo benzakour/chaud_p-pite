@@ -1,7 +1,15 @@
+/**
+ * CesarPalace1 : plugin which implement the cesar encryption
+ */
 package plugins;
 
 public class CesarPalace1 implements Plugin{
 
+	/**
+	 * this method transform the current string with the cesar encryption
+	 * @param curentString : the curent string to transform
+	 * @return the string transforming
+	 */
 	@Override
 	public String transform(String curentString) {
 		char [] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
@@ -19,6 +27,10 @@ public class CesarPalace1 implements Plugin{
 		return newString;
 	}
 
+	/**
+     * get the label of the plugin
+     * @return the plugin name "Cesar Palace 1"
+     */
 	@Override
 	public String getLabel() {
 		return "Cesar Palace 1";
