@@ -8,10 +8,7 @@
  */
 package plugins;
 
-/**
- *
- * @author Quietlyben
- */
+
 public interface Plugin {
 
 	/**
