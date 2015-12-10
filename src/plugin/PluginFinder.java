@@ -13,27 +13,34 @@ public class PluginFinder extends Observable implements ActionListener {
 
     PluginFilter pf = new PluginFilter();
     File dPath;
-    ArrayList<Class<?>> plugins = new ArrayList<Class<?>>();
+    ArrayList<Class<?>> plugins = new ArrayList<>();
 
     public PluginFinder(File f, JMenu jMenu, JTextArea jta) {
         this.dPath = f;
     }
 
+    
+    /**
+     * List the files in the directory
+     *
+     *
+     * @return an array of the files
+     */
     File[] listPluginFile() {
         return dPath.listFiles(pf);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         File[] liste = listPluginFile();
-        for (int i = 0; i < liste.length; i++) {
-            File current = liste[i];// recup le fichier courant
-            String pName = current.getName().substring(0, current.getName().length() - 6); //retire l'extension.class
+        for (File file : liste) {
+            String pName = file.getName().substring(0, file.getName().length() - 6); //retire l'extension.class
             try {
                 Class<?> cl = Class.forName("plugins." + pName); //cree la class associ� au nom
                 if (!existPlugin(cl)) {//test si le plugin n'existe aps deja
                     plugins.add(cl);
                     notifyObservers(cl);// on previent la barre de menu qu'il y a un nouveau plugin
-                    //createMenuItem(cl);
+
                 }
             } catch (ClassNotFoundException e1) {
                 e1.printStackTrace();

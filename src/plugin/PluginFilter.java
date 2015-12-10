@@ -31,7 +31,7 @@ public class PluginFilter implements FilenameFilter {
             return false;
         } else {
             Class<?> fileClass = getClass(filename);
-            return extendsPlugin(fileClass);
+            return extendsPlugin(fileClass) && hasEmptyConstructor(fileClass);
         }
     }
 

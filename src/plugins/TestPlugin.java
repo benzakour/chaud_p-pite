@@ -5,28 +5,24 @@
  */
 package plugins;
 
-/**
- *
- * @author Quietlyben
- */
-public class ToLowerCase implements Plugin {
+public class TestPlugin implements Plugin {
 
-    public ToLowerCase() {
+    public TestPlugin() {
     }
 
-    /**
-     * Transform a string to lower case 
-     *
-     * @param string
-     * @return string in lower case
-     */
     @Override
     public String transform(String s) {
-        return s.toLowerCase();
+        String res = "";
+        for (int i = 0; i < s.length(); i++) {
+            if (i % 2 == 0) {
+                res = res + s.charAt(i);
+            }
+        }
+        return res;
     }
 
     @Override
     public String getLabel() {
-        return "To Lower Case";
+        return "Test";
     }
 }

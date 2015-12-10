@@ -11,6 +11,15 @@ package plugins;
  */
 public class ToUpperCase implements Plugin {
 
+    public ToUpperCase() {
+    }
+
+    /**
+     * Transform a string to upper case 
+     *
+     * @param string
+     * @return string in upper case
+     */
     @Override
     public String transform(String s) {
         return s.toUpperCase();
