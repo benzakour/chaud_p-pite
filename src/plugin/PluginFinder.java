@@ -1,3 +1,7 @@
+/**
+ * @author theGroup
+ * Plugin finder : this class represent 
+ */
 package plugin;
 
 import java.awt.event.ActionEvent;
@@ -11,36 +15,53 @@ import javax.swing.JTextArea;
 
 public class PluginFinder extends Observable implements ActionListener {
 
-    PluginFilter pf = new PluginFilter();
-    File dPath;
-    ArrayList<Class<?>> plugins = new ArrayList<>();
+	/**
+	 * this class had 3 attributes
+	 * - pf : the plugin filter
+	 * - dpath : the pathname of the current directory
+	 * - plugins : a list of all plugins find in the plugin's path
+	 */
+    protected PluginFilter pf;
+    protected File dPath;
+    protected ArrayList<Class<?>> plugins;
 
+    /**
+     * PluginFinder constructor
+     * @param f
+     * @param jMenu
+     * @param jta
+     */
     public PluginFinder(File f, JMenu jMenu, JTextArea jta) {
-        this.dPath = f;
+        this.pf = new PluginFilter();
+    	this.dPath = f;
+        this.plugins = new ArrayList<Class<?>>();
     }
 
-    
     /**
-     * List the files in the directory
-     *
-     *
-     * @return an array of the files
+     * thi method allows to have the list of all file in directories
+     * @return the list of all file in directories
      */
     File[] listPluginFile() {
         return dPath.listFiles(pf);
     }
 
-    @Override
+    /**
+     * method which use when an action is call
+     * this method look all file in a directories and checked if the file had <strong>.class</strong> extension.
+     * if the plugins exist meaning is present in the plugins list, method do nothing else she had this class in the list
+     * and update the bar menu     * 
+     */
     public void actionPerformed(ActionEvent e) {
         File[] liste = listPluginFile();
-        for (File file : liste) {
-            String pName = file.getName().substring(0, file.getName().length() - 6); //retire l'extension.class
+        for (int i = 0; i < liste.length; i++) {
+            File current = liste[i];// recup le fichier courant
+            String pName = current.getName().substring(0, current.getName().length() - 6); //retire l'extension.class
             try {
-                Class<?> cl = Class.forName("plugins." + pName); //cree la class associ� au nom
-                if (!existPlugin(cl)) {//test si le plugin n'existe aps deja
-                    plugins.add(cl);
-                    notifyObservers(cl);// on previent la barre de menu qu'il y a un nouveau plugin
-
+                Class<?> className = Class.forName("plugins." + pName); //cree la class associ� au nom
+                if (!existPlugin(className)) {//test si le plugin n'existe aps deja
+                    plugins.add(className);
+                    notifyObservers(className);// on previent la barre de menu qu'il y a un nouveau plugin
+                    //createMenuItem(className);
                 }
             } catch (ClassNotFoundException e1) {
                 e1.printStackTrace();
@@ -48,6 +69,12 @@ public class PluginFinder extends Observable implements ActionListener {
         }
     }
 
+    /**
+     * verify if a plugins exist in the list
+     * @param pluginClass : the plugin class check in the list
+     * @return True : if exist
+     * @return False : if is'not exist
+     */
     private boolean existPlugin(Class<?> cl) {
         return plugins.contains(cl);
     }

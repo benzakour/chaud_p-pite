@@ -1,3 +1,7 @@
+/**
+ * @author theGroup
+ * ToUpperCase : this class represent toUpperCase plugin
+ */
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,26 +9,21 @@
  */
 package plugins;
 
-/**
- *
- * @author Quietlyben
- */
 public class ToUpperCase implements Plugin {
 
-    public ToUpperCase() {
+	/**
+	 * this method transform the selected string to a upper case string
+	 * @return an upper case string
+	 */
+    @Override
+    public String transform(String currentString) {
+        return currentString.toUpperCase();
     }
 
     /**
-     * Transform a string to upper case 
-     *
-     * @param string
-     * @return string in upper case
+     * get the label of the plugin
+     * @return the plugin name
      */
-    @Override
-    public String transform(String s) {
-        return s.toUpperCase();
-    }
-
     @Override
     public String getLabel() {
         return "To Upper Case";
